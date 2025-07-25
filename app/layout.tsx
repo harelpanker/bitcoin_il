@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { dmSans } from '@/lib/fonts/fonts';
+import { openSans } from '@/lib/fonts/fonts';
 import { Children } from '@/lib/types/children';
 import './globals.css';
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<Children>) {
 	return (
 		<html lang='en' dir='ltr'>
-			<body className={`${dmSans.variable}`}>
+			<body className={`${openSans.variable}`}>
 				<div className='relative flex grow flex-col'>
 					{/* header */}
 					{children}
