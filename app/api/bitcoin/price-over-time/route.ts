@@ -2,10 +2,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-	console.log('API Route Hit: /api/bitcoin-price/price-over-time');
-
-	const COINGECKO_API_URL = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily`;
-	console.log('Attempting to fetch from CoinGecko URL:', COINGECKO_API_URL);
+	const COINGECKO_API_URL = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=180&interval=daily`;
 
 	try {
 		const response = await fetch(COINGECKO_API_URL, {
@@ -28,17 +25,26 @@ export async function GET() {
 		}
 
 		const data = await response.json();
-		console.log('CoinGecko raw data received (first 100 chars):', JSON.stringify(data).substring(0, 100), '...'); // <-- Add this
+		// console.log('CoinGecko raw data received (first 100 chars):', JSON.stringify(data).substring(0, 100), '...'); // <-- Add this
 
 		const formattedData = data.prices.map((item: [number, number]) => {
 			const timestamp = item[0];
-			const price = item[1];
+			const price = item[1].toFixed(2);
 			const date = new Date(timestamp);
-			const year = date.getFullYear();
-			const month = String(date.getMonth() + 1).padStart(2, '0');
-			const day = String(date.getDate()).padStart(2, '0');
+
+			const formattedDate = date.toLocaleDateString('en-US', {
+				month: 'short', // "Dec"
+				day: '2-digit', // "24"
+				// year: 'numeric', // "2025"
+			});
+
+			// const month = date.toLocaleDateString('en-US', {
+			// 	month: 'short', // "Dec"
+			// });
+
 			return {
-				date: `${year}-${month}-${day}`,
+				date: formattedDate,
+				// month,
 				price: price,
 			};
 		});
