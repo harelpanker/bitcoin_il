@@ -4,37 +4,12 @@ import useSWR from 'swr';
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { BitcoinPriceData, HistoricalDataResponse } from '@/lib/types/price-over-time';
+import { genericFetcher } from '@/lib/generic-fetcher';
+import { formatUSD } from '@/lib/formater';
 
-interface HistoricalPricePoint {
-	date: string;
-	price: number;
-}
-interface HistoricalDataResponse {
-	historicalPrices: HistoricalPricePoint[];
-}
-
-interface BitcoinPriceData {
-	price: number;
-}
-
-const priceFetcher = async (url: string): Promise<BitcoinPriceData> => {
-	const response = await fetch(url);
-
-	if (!response.ok) {
-		const errorBody = await response.json();
-		throw new Error(errorBody.error || 'Failed to fetch data from API');
-	}
-	return response.json();
-};
-
-const fetcher = async (url: string): Promise<HistoricalDataResponse> => {
-	const response = await fetch(url);
-	if (!response.ok) {
-		const errorBody = await response.json();
-		throw new Error(errorBody.error || 'Failed to fetch historical data from API');
-	}
-	return response.json();
-};
+const priceFetcher = (url: string) => genericFetcher<BitcoinPriceData>(url);
+const fetcher = (url: string) => genericFetcher<HistoricalDataResponse>(url);
 
 export default function AnalyticsClientPage() {
 	const { data, error, isLoading } = useSWR<HistoricalDataResponse>('/api/bitcoin/price-over-time', fetcher);
@@ -50,11 +25,11 @@ export default function AnalyticsClientPage() {
 
 	if (priceError) {
 		console.error('Error fetching Bitcoin price:', error);
-		return <div className='py-4 text-center text-red-500'>Failed to load Bitcoin price: {error.message}</div>;
+		return <div className='py-4 text-center text-orange-500'>Failed to load Bitcoin price: {priceError.message}</div>;
 	}
 
 	if (!priceData || typeof priceData.price !== 'number') {
-		return <div className='py-4 text-center text-yellow-500'>No Bitcoin price data available.</div>;
+		return <div className='py-4 text-center text-orange-500'>No Bitcoin price data available.</div>;
 	}
 
 	if (isLoading) {
@@ -63,11 +38,11 @@ export default function AnalyticsClientPage() {
 
 	if (error) {
 		console.error('Error fetching historical Bitcoin price:', error);
-		return <div className='py-4 text-center text-red-500'>Failed to load historical data: {error.message}</div>;
+		return <div className='py-4 text-center text-orange-500'>Failed to load historical data: {error.message}</div>;
 	}
 
 	if (!data?.historicalPrices || data.historicalPrices.length === 0) {
-		return <div className='py-4 text-center text-yellow-500'>No historical Bitcoin price data available.</div>;
+		return <div className='py-4 text-center text-orange-500'>No historical Bitcoin price data available.</div>;
 	}
 
 	const historicalData = data.historicalPrices;
@@ -85,7 +60,9 @@ export default function AnalyticsClientPage() {
 			<CardHeader>
 				<CardTitle>Current Bitcoin Price</CardTitle>
 				<CardDescription>
-					<span className='font-semibold'>${bitcoinPrice.toFixed(0)} USD</span>
+					<span className='font-semibold'>
+						{bitcoinPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} USD
+					</span>
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
@@ -104,10 +81,17 @@ export default function AnalyticsClientPage() {
 							tickLine={false}
 							axisLine={false}
 							tickMargin={8}
-							tickFormatter={(value) => value.slice(0, 18)}
+							minTickGap={32}
+							tickFormatter={(value) => value.slice(0, 6)}
 						/>
 
-						<YAxis tickLine={false} axisLine={false} tickMargin={8} tickCount={6} />
+						<YAxis
+							tickLine={false}
+							axisLine={false}
+							tickMargin={8}
+							tickCount={6}
+							tickFormatter={(value) => formatUSD(value)}
+						/>
 
 						<ChartTooltip cursor={true} content={<ChartTooltipContent />} />
 

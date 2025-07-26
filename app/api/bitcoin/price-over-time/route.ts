@@ -1,4 +1,5 @@
 // app/api/bitcoin-price/price-over-time.ts
+import { formatUSD } from '@/lib/formater';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -8,8 +9,6 @@ export async function GET() {
 		const response = await fetch(COINGECKO_API_URL, {
 			next: { revalidate: 3600 },
 		});
-
-		console.log('CoinGecko Response Status:', response.status);
 
 		if (!response.ok) {
 			const errorText = await response.text();
@@ -38,18 +37,12 @@ export async function GET() {
 				// year: 'numeric', // "2025"
 			});
 
-			// const month = date.toLocaleDateString('en-US', {
-			// 	month: 'short', // "Dec"
-			// });
-
 			return {
 				date: formattedDate,
-				// month,
 				price: price,
 			};
 		});
 
-		console.log('Formatted historical prices count:', formattedData.length); // <-- Add this
 		return NextResponse.json({ historicalPrices: formattedData });
 	} catch (error: any) {
 		console.error('Server-side error fetching historical Bitcoin price:', error);

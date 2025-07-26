@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
 
 import { cn } from '@/lib/utils';
+import { formatUSD } from '@/lib/formater';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const;
@@ -78,11 +79,9 @@ ${prefix} [data-chart=${id}] {
 ${colorConfig
 	.map(([key, itemConfig]) => {
 		const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
-		return color ? `  --color-${key}: ${color};` : null;
+		return color ? `--color-${key}: ${color};` : null;
 	})
-	.join('\n')}
-}
-`
+	.join('\n')}}`
 					)
 					.join('\n'),
 			}}
@@ -191,8 +190,8 @@ function ChartTooltipContent({
 									<div className={cn('flex flex-1 flex-col justify-start gap-y-1 leading-none')}>
 										<div>{nestLabel ? tooltipLabel : null}</div>
 										<div className='text-foreground flex gap-x-0.5 font-mono font-medium tabular-nums'>
-											<span>{itemConfig?.label || item.name}</span>
-											{item.value && <span>{item.value.toLocaleString()}</span>}
+											{/* <span>{itemConfig?.label || item.name}</span> */}
+											{item.value && <span>{formatUSD(Number(item.value))} USD</span>}
 										</div>
 									</div>
 								</>
