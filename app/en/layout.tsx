@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { openSans } from '@/lib/fonts/fonts';
 import { Children } from '@/lib/types/children';
-import './globals.css';
+import '../globals.css';
 
 export const metadata: Metadata = {
 	title: 'Bitcoin IL',
