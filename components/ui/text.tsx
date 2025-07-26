@@ -6,9 +6,9 @@ export function Text({ className, ...props }: React.ComponentPropsWithoutRef<'p'
 }
 
 export function TextLink({ className, ...props }: React.ComponentPropsWithoutRef<typeof Link>) {
-	return <Link {...props} className={clsx(className, 'text-info hover:opacity-85 transition-opacity duration-300')} />;
+	return <Link {...props} className={clsx('text-info hover:opacity-85 transition-opacity duration-300', className)} />;
 }
 
 export function Strong({ className, ...props }: React.ComponentPropsWithoutRef<'strong'>) {
-	return <strong {...props} className={clsx(className, 'font-medium')} />;
+	return <strong {...props} className={clsx('font-medium', className)} />;
 }

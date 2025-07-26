@@ -3,7 +3,7 @@ import SectionHero from '@/components/home-page/section-hero';
 
 export default function HomePage() {
 	return (
-		<Section element='main'>
+		<Section element='main' className='grow'>
 			<SectionHero />
 		</Section>
 	);
