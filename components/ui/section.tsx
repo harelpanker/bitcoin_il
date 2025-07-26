@@ -7,9 +7,7 @@ type SectionProps = {
 export default function Section({ className, element = 'section', children, ...props }: SectionProps) {
 	const Element = element;
 	return (
-		<Element
-			{...props}
-			className={clsx(className, `relative z-20 flex flex-col ${element !== 'main' ? ' px-5 lg:px-12' : 'grow'}`)}>
+		<Element {...props} className={clsx(className, `relative z-20 flex flex-col`)}>
 			{children}
 		</Element>
 	);

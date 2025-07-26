@@ -13,20 +13,16 @@ import {
 } from '@/components/ui/dropdown-menu';
 import {
 	NavigationMenu,
-	NavigationMenuContent,
-	NavigationMenuIndicator,
 	NavigationMenuItem,
 	NavigationMenuLink,
 	NavigationMenuList,
-	NavigationMenuTrigger,
-	NavigationMenuViewport,
 } from '@/components/ui/navigation-menu';
 
 import logo from '@/public/logo.svg';
 
-const links = [
-	{ href: '/en/analytics', label: 'Analytics' },
-	{ href: '/he', label: 'HE' },
+const dropLinks = [
+	{ href: '/en', label: 'English' },
+	{ href: '/he', label: 'Hebrew' },
 ];
 
 export default function Header() {
@@ -37,7 +33,7 @@ export default function Header() {
 					<Image src={logo} alt='Bitcoin IL' priority={true} />
 				</Link>
 				<NavigationMenu viewport={false}>
-					<NavigationMenuList>
+					<NavigationMenuList className='gap-x-2'>
 						<NavigationMenuItem>
 							<NavigationMenuLink asChild>
 								<Link href='/en/analytics'>Analytics</Link>
@@ -51,24 +47,16 @@ export default function Header() {
 								<DropdownMenuContent align='end'>
 									<DropdownMenuLabel>Language</DropdownMenuLabel>
 									<DropdownMenuSeparator />
-									<DropdownMenuItem asChild>
-										<Link href='/en'>English</Link>
-									</DropdownMenuItem>
-									<DropdownMenuItem asChild>
-										<Link href='/he'>Hebrew</Link>
-									</DropdownMenuItem>
+									{dropLinks.map((link) => (
+										<DropdownMenuItem key={link.href} asChild>
+											<Link href={link.href}>{link.label}</Link>
+										</DropdownMenuItem>
+									))}
 								</DropdownMenuContent>
 							</DropdownMenu>
 						</NavigationMenuItem>
 					</NavigationMenuList>
 				</NavigationMenu>
-				{/* <nav>
-					{links.map((link) => (
-						<Button variant='ghost' asChild key={link.href}>
-							<Link href={link.href}>{link.label}</Link>
-						</Button>
-					))}
-				</nav> */}
 			</Container>
 		</Section>
 	);
