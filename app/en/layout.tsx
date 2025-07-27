@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<Children>) {
 	return (
 		<html lang='en' dir='ltr'>
-			<body className={`${openSans.variable}`}>
+			<body className={`${openSans.variable} font-inter`}>
 				<div className='relative flex grow flex-col'>
 					<Header />
 					{children}
