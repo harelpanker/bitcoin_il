@@ -1,5 +1,4 @@
 // app/api/bitcoin-price/price-over-time.ts
-import { formatUSD } from '@/lib/formater';
 import { NextResponse } from 'next/server';
 
 export async function GET() {

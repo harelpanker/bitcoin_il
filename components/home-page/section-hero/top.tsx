@@ -15,7 +15,7 @@ export default function Top({ isHebrew = false }: { isHebrew?: boolean }) {
 				<Heading isRtl={isHebrew} level={1} className='text-4xl xl:text-7xl'>
 					{!isHebrew ? (
 						<>
-							<span className='xl:block'>Israel's Bitcoin </span>Treasury Company
+							<span className='xl:block'>Israel&apos;s Bitcoin </span>Treasury Company
 						</>
 					) : (
 						<>
@@ -27,7 +27,7 @@ export default function Top({ isHebrew = false }: { isHebrew?: boolean }) {
 			<Text className='xl:text-xl'>
 				{!isHebrew ? (
 					<SpanGradient>
-						<span className='xl:block'>Leading Israel's transition into the Bitcoin economy securely, </span>
+						<span className='xl:block'>Leading Israel&apos;s transition into the Bitcoin economy securely, </span>
 						strategically, and transparently
 					</SpanGradient>
 				) : (
