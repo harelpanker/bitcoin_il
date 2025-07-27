@@ -27,7 +27,7 @@ const dropLinks = [
 
 export default function Header() {
 	return (
-		<Section element='header' className='py-4'>
+		<Section dir='ltr' element='header' className='py-4'>
 			<Container className='flex max-w-full items-center justify-between'>
 				<Link href='/en' className='max-w-1/2'>
 					<Image src={logo} alt='Bitcoin IL' priority={true} />

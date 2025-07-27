@@ -4,3 +4,19 @@
 	border-top: 2px solid rgba(255, 255, 255, 0.5);
 	border-bottom: 2px solid rgba(255, 255, 255, 0.3);
 }
+
+.imgWrap {
+	animation: moveHorizontal 30s ease infinite;
+}
+
+@keyframes moveHorizontal {
+	0% {
+		transform: translateX(-20%) translateY(-2%);
+	}
+	50% {
+		transform: translateX(0%) translateY(0%);
+	}
+	100% {
+		transform: translateX(-20%) translateY(-2%);
+	}
+}
