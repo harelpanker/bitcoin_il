@@ -15,7 +15,7 @@ export default function Bottom({ isHebrew = false }: { isHebrew?: boolean }) {
 			{data.map((item) => (
 				<div key={item.title} className='flex flex-col gap-y-2'>
 					<Text>
-						<span className='text-5xl font-bold xl:text-5xl'>{item.title}</span>
+						<span className='text-3xl font-bold xl:text-5xl'>{item.title}</span>
 					</Text>
 					<Text>
 						<span className='text-sm font-semibold'>{item.text}</span>
