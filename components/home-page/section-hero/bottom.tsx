@@ -11,7 +11,7 @@ export default function Bottom({ isHebrew = false }: { isHebrew?: boolean }) {
 
 	return (
 		<Container
-			className={`${styles.stacksContainer} flex w-full max-w-[18rem] flex-col gap-y-5 rounded-3xl px-5 py-8 md:grid md:max-w-[62rem] md:grid-cols-3 md:py-6`}>
+			className={`${styles.stacksContainer} flex w-full max-w-[14rem] flex-col gap-y-5 rounded-3xl px-5 py-8 md:grid md:max-w-[62rem] md:grid-cols-3 md:py-6`}>
 			{data.map((item) => (
 				<div key={item.title} className='flex flex-col gap-y-2'>
 					<Text>

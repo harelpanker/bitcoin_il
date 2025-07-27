@@ -12,7 +12,7 @@ export default function Top({ isHebrew = false }: { isHebrew?: boolean }) {
 				<Text className='font-semibold'>
 					<SpanGradient>{topText}</SpanGradient>
 				</Text>
-				<Heading isRtl={isHebrew} level={1} className='text-4xl xl:text-7xl'>
+				<Heading isRtl={isHebrew} level={1} className='text-5xl xl:text-7xl'>
 					{!isHebrew ? (
 						<>
 							<span className='xl:block'>Israel&apos;s Bitcoin </span>Treasury Company
