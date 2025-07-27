@@ -13,7 +13,7 @@ export default function AnalyticsRootPage() {
 		<Section element='main'>
 			<AnalyticsClientPage />
 			<Section>
-				<Container className='grid max-w-full grid-cols-1 justify-center gap-4 md:grid-cols-6'>
+				<Container className='flex max-w-full flex-col justify-center gap-4 lg:grid lg:grid-cols-6'>
 					<PriceOverTime />
 				</Container>
 			</Section>
