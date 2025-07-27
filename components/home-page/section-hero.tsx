@@ -5,7 +5,7 @@ import BottomAnimation from '@/components/home-page/section-hero/bottom-animatio
 
 export default function SectionHero({ isHebrew = false }: { isHebrew?: boolean }) {
 	return (
-		<Section className='flex grow flex-col justify-between overflow-hidden pb-6 pt-6 text-center lg:py-24'>
+		<Section className='flex grow flex-col justify-between gap-y-12 overflow-hidden pb-6 pt-6 text-center lg:py-24'>
 			<Top isHebrew={isHebrew} />
 			<Bottom isHebrew={isHebrew} />
 			<BottomAnimation />
