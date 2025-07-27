@@ -43,7 +43,7 @@ export async function GET() {
 		});
 
 		return NextResponse.json({ historicalPrices: formattedData });
-		// @ts-ignore
+		/* eslint-disable @typescript-eslint/no-explicit-any */
 	} catch (error: any) {
 		console.error('Server-side error fetching historical Bitcoin price:', error);
 		// Ensure this error response is always JSON
