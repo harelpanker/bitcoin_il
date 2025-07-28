@@ -12,6 +12,7 @@ export default function BottomAnimation() {
 					alt='bg'
 					width={2277}
 					height={1075}
+					priority
 				/>
 			</div>
 		</figure>
