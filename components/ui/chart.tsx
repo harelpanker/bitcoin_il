@@ -4,7 +4,6 @@ import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
 
 import { cn } from '@/lib/utils';
-import { formatUSD } from '@/lib/formater';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const;
@@ -154,7 +153,7 @@ function ChartTooltipContent({
 				{payload.map((item, index) => {
 					const key = `${nameKey || item.name || item.dataKey || 'value'}`;
 					const itemConfig = getPayloadConfigFromPayload(config, item, key);
-					const indicatorColor = color || item.payload.fill || item.color;
+					const indicatorColor = color || item.payload.fill || item.color || 'var(--chart-3)';
 
 					return (
 						<div
@@ -191,7 +190,8 @@ function ChartTooltipContent({
 										<div>{nestLabel ? tooltipLabel : null}</div>
 										<div className='text-foreground flex gap-x-0.5 font-mono font-medium tabular-nums'>
 											{/* <span>{itemConfig?.label || item.name}</span> */}
-											{item.value && <span>{formatUSD(Number(item.value))} USD</span>}
+											{/* {formatUSD(Number(item.value))} */}
+											{item.value && <span>{item.value}</span>}
 										</div>
 									</div>
 								</>

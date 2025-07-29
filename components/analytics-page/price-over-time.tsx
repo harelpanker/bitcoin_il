@@ -8,6 +8,7 @@ import { BitcoinPriceData, HistoricalDataResponse } from '@/lib/types/price-over
 import { Skeleton } from '@/components/ui/skeleton';
 import { genericFetcher } from '@/lib/generic-fetcher';
 import { formatUSD } from '@/lib/formater';
+import { DollarSign, CalendarDays } from 'lucide-react';
 
 const priceFetcher = (url: string) => genericFetcher<BitcoinPriceData>(url);
 const fetcher = (url: string) => genericFetcher<HistoricalDataResponse>(url);
@@ -36,19 +37,21 @@ export default function AnalyticsClientPage() {
 	const chartConfig = {
 		price: {
 			label: '$',
-			color: 'var(--chart-5)',
+			color: 'var(--chart-3)',
+		},
+		data: {
+			label: 'Data',
+			color: 'var(--chart-3)',
 		},
 	} satisfies ChartConfig;
 
 	return (
-		<Card className='col-span-1 md:col-span-4'>
+		<Card className='col-span-1 md:col-span-3'>
 			<CardHeader>
 				<CardTitle>Current Bitcoin Price</CardTitle>
 				{!priceLoading && bitcoinPrice ? (
 					<CardDescription>
-						<span className='font-semibold'>
-							{bitcoinPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} USD
-						</span>
+						<span className='font-semibold'>{formatUSD(bitcoinPrice)} USD</span>
 					</CardDescription>
 				) : (
 					<Skeleton className='h-4 w-28 rounded-full'></Skeleton>
@@ -61,7 +64,7 @@ export default function AnalyticsClientPage() {
 							accessibilityLayer
 							data={historicalData}
 							margin={{
-								left: 12,
+								left: 8,
 								right: 12,
 							}}>
 							<CartesianGrid vertical={false} />
@@ -83,7 +86,36 @@ export default function AnalyticsClientPage() {
 								tickFormatter={(value) => formatUSD(value)}
 							/>
 
-							<ChartTooltip cursor={true} content={<ChartTooltipContent />} />
+							<ChartTooltip
+								content={
+									<ChartTooltipContent
+										hideLabel
+										className='p-4'
+										formatter={(value, name, item) => (
+											<div className='min-w-36 flex justify-between'>
+												<div
+													className='bg-(--color-bg) rounded-xs h-full w-1 shrink-0'
+													style={
+														{
+															'--color-bg': `${chartConfig[name as keyof typeof chartConfig]?.color}`,
+														} as React.CSSProperties
+													}></div>
+												<div className='flex w-full grow flex-col gap-y-2'>
+													<div className='flex items-center justify-end gap-x-1'>
+														<div className='font-medium'>{item.payload.date}</div>
+														<CalendarDays size={12} className='text-muted-foreground' />
+													</div>
+													<div className='flex items-center justify-end gap-x-1'>
+														<div className='font-medium'>{formatUSD(Number(value))}</div>
+														<DollarSign size={12} className='text-muted-foreground' />
+													</div>
+												</div>
+											</div>
+										)}
+									/>
+								}
+								cursor={true}
+							/>
 
 							<defs>
 								<linearGradient id='fillPrice' x1='0' y1='0' x2='0' y2='1'>
